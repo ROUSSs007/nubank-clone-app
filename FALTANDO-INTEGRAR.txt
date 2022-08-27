@@ -1,0 +1,2 @@
+01: Sistema de login na LockScreen.
+02: Inserir novamente o sistema de biometria no botão da LockScreen.
