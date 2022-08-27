@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nubank_clone_app/constants.dart';
 import 'package:nubank_clone_app/pages/home/main.dart';
+import 'package:nubank_clone_app/pages/lockScreen/lock_screen.dart';
 //import 'package:nubank_clone_app/pages/lockScreen/lock_screen.dart';
 
 void main() {
@@ -48,7 +49,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Lottie.asset('assets/lottie/56875-white-loader.json'),
-      nextScreen: const HomePage(),
+      nextScreen: const LockScreen(),
       backgroundColor: primaryColor,
       splashIconSize: 250,
       duration: 3000,

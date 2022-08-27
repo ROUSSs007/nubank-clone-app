@@ -1,10 +1,10 @@
 // ignore_for_file: unused_field
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:nubank_clone_app/pages/home/main.dart';
 
 class UnlockButton extends StatefulWidget {
   const UnlockButton({
@@ -34,15 +34,17 @@ class _UnlockButtonState extends State<UnlockButton> {
   @override
   void initState() {
     super.initState();
-    auth.isDeviceSupported().then((bool isSupported) => setState(
-          () {
-            if (isSupported = true) {
-              _supportState = _SupportState.supported;
-            } else {
-              _supportState = _SupportState.unsupported;
-            }
-          },
-        ));
+    auth.isDeviceSupported().then(
+          (bool isSupported) => setState(
+            () {
+              if (isSupported = true) {
+                _supportState = _SupportState.supported;
+              } else {
+                _supportState = _SupportState.unsupported;
+              }
+            },
+          ),
+        );
   }
 
   Future<void> _authenticate() async {
@@ -81,6 +83,10 @@ class _UnlockButtonState extends State<UnlockButton> {
     setState(() {
       _authorized = authenticated ? 'Authorized' : 'Not Authorized';
     });
+
+    if (_authorized == 'Authorized') {
+      Navigator.of(context).pushReplacement(_createRoute());
+    }
   }
 
   // Future<void> _authenticateWithBiometrics() async {
@@ -146,6 +152,24 @@ class _UnlockButtonState extends State<UnlockButton> {
       ),
     );
   }
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const HomePage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
 
 enum _SupportState {
